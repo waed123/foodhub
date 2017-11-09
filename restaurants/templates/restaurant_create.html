@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block heading %} 
+	Create 
+{% endblock heading%}
+
+{% block content%}
+
+	<form method="POST" action="{% url 'restaurant_create' %}">
+		{% csrf_token %}
+		{{form.as_p}}
+		<input type="submit" value="submit" >
+	</form>	
+{% endblock content%}

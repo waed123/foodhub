@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title></title>
-</head>
-<body>
+{% extends "base.html" %}
 
-	{% for x in objects %}
-		<p>{{x.name}}</p>
-		<p>{{x.description}}</p>
-	{% endfor %}
+{% block heading %} 
+	List 
+{% endblock heading%}
+
+{% block content%}
+
+
+	<div class="jumbotron">
+		<h1 class="display-3">Restaurants</h1>		  
+		<p class="lead">
+		<a class="btn btn-primary btn-lg" href="{% url 'restaurant_create' %}" role="button">Create</a>
+		</p>
+	</div>
+	<div class="row">
+			{% for c in objects %}
+			<div class="col-sm-6">
+			    <div class="card">
+			    	<div class="card-body">
+			    		<h4 class="card-title">{{c.name}} <small>{{c.updated|timesince}}</small></h4>
+			    		<p class="card-text">{{c.description|linebreaks|truncatechars:30}}</p>
+			    		<a href="{% url 'restaurant_delete' restaurant_id=c.id %}" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="delete ">Delete</a>
+			    		<a href="{% url 'restaurant_update' restaurant_id=c.id %}" class="btn btn-info">Update</a>
+			    		<a href="{% url 'restaurant_detail' rest_id=c.id %}" class="btn btn-secondary">Read More...</a>
+			    	</div>
+			    </div>
+			</div>
+			{% endfor %}
+		</div>
+{% endblock content%}
 	
-</body>
-</html>

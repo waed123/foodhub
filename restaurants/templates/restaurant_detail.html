@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title></title>
-</head>
-<body>
-	<p>{{object.name}}</p>
-	<p>{{object.description}}</p>
-</body>
-</html>
+{% extends "base.html" %}
+	
+{% block heading %} Detail {% endblock heading%}
+
+{% block content%}
+	<div class="jumbotron">
+		<h1 class="display-3">{{object.name}}</h1>
+		<p class="lead">{{object.description}}</p>
+	</div>
+{% endblock content%}
