@@ -7,9 +7,18 @@
 		<h1 class="display-3">{{object.name}}</h1>
 		<p class="lead">{{object.description}}</p>
 
+
 		{% if object.logo %}
 			<img src="{{object.logo.url}}" alt="card image" class="img-responsive" style="height: 30%; width: 30%;">
 		{% endif %}
+
+		<p>{{time}} | {{status}}</p>
+
+
+		{% for item in  items%}
+			{{item.name}}<br>
+			{{item.description}}
+		{% endfor %}
 
 	</div>
 {% endblock content%}

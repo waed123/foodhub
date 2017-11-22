@@ -7,3 +7,5 @@ class RestAdminModel(admin.ModelAdmin):
 		model = models.Restaurant
 
 admin.site.register(models.Restaurant, RestAdminModel)
+
+admin.site.register(models.Item)

@@ -14,38 +14,45 @@
 		</p>
 	</div>
 	<div class="row">
-			{% for c in objects %}
+
+		<form action="{% url 'restaurant_list' %}" method="GET">
+			<input type="text" name='q' placeholder="Search posts">
+			<input type="submit" value="Search">
+		</form>
+		<br>
+
+		{% for c in objects %}
 			<div class="col-sm-6">
-			    <div class="card">
-			    	<div class="card-body">
-			    		<h4 class="card-title">{{c.name}} <small>{{c.updated|timesince}}</small></h4>
-			    		{% if c.logo %}
-			    		<img src="{{c.logo.url}}" alt="card image" class="card-img-top">
-			    		{% endif %}
-			    		<p class="card-text">{{c.description|linebreaks|truncatechars:30}}</p>
-			    		<a href="{% url 'restaurant_delete' restaurant_id=c.id %}" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="delete ">Delete</a>
-			    		<a href="{% url 'restaurant_update' restaurant_id=c.id %}" class="btn btn-info">Update</a>
-			    		<a href="{% url 'restaurant_detail' rest_id=c.id %}" class="btn btn-secondary">Read More...</a>
-			    	</div>
-			    </div>
+				<div class="card">
+					<div class="card-body">
+						<h4 class="card-title">{{c.name}} <small>{{c.updated|timesince}}</small></h4>
+						{% if c.logo %}
+						<img src="{{c.logo.url}}" alt="card image" class="card-img-top">
+						{% endif %}
+						<p class="card-text">{{c.description|linebreaks|truncatechars:30}}</p>
+						<a href="{% url 'restaurant_delete' restaurant_slug=c.slug %}" class="btn btn-warning" data-toggle="tooltip" data-placement="top" title="delete ">Delete</a>
+						<a href="{% url 'restaurant_update' restaurant_slug=c.slug %}" class="btn btn-info">Update</a>
+						<a href="{% url 'restaurant_detail' restaurant_slug=c.slug %}" class="btn btn-secondary">Read More...</a>
+					</div>
+				</div>
 			</div>
 			{% endfor %}
 		</div>
 
 		<div class="pagination" style="margin-top:2%;">
-		    <span class="step-links">
-		        {% if objects.has_previous %}
-		            <a href="?page={{ objects.previous_page_number }}">previous</a>
-		        {% endif %}
+			<span class="step-links">
+				{% if objects.has_previous %}
+					<a href="?page={{ objects.previous_page_number }}&q={{request.GET.q}}">previous</a>
+				{% endif %}
 
-		        <span class="current">
-		            Page {{ objects.number }} of {{ objects.paginator.num_pages }}.
-		        </span>
+				<span class="current">
+					Page {{ objects.number }} of {{ objects.paginator.num_pages }}.
+				</span>
 
-		        {% if objects.has_next %}
-		            <a href="?page={{ objects.next_page_number }}">next</a>
-		        {% endif %}
-		    </span>
+				{% if objects.has_next %}
+					<a href="?page={{ objects.next_page_number }}&q={{request.GET.q}}">next</a>
+				{% endif %}
+			</span>
 		</div>
 {% endblock content%}
 	
