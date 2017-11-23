@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
-
+from django.contrib import messages
 
 
 
@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate, login, logout
 def usersignup(request):
 	context={}
 	form = UserSignup()
-	contect['form']=form
+	context['form']=form
 	if request.method == 'POST':
 		form = UserSignup(request.POST)
 		if form.is_valid():
@@ -36,9 +36,9 @@ def usersignup(request):
 def userlogin(request):
 	context={}
 	form = UserLogin()
-	contect['form']=form
+	context['form']=form
 	if request.method == 'POST':
-		form = UserSignup(request.POST)
+		form = UserLogin(request.POST)
 		if form.is_valid():
 
 			username=form.cleaned_data['username']
