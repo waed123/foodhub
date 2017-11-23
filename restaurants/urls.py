@@ -12,4 +12,7 @@ urlpatterns = [
     url(r'^item_create/$', views.item_create , name="item_create"),
     url(r'^item_update/(?P<item_slug>[-\w]+)/$', views.item_update , name="item_update"),
     url(r'^item_delete/(?P<item_slug>[-\w]+)/$', views.item_delete , name="item_delete"),
+    url(r'^signup/$', views.usersignup , name="signup"),
+    url(r'^login/$', views.userlogin , name="login"),
+    url(r'^logout/$', views.userlogout , name="logout"),
 ]

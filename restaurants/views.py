@@ -1,10 +1,63 @@
 from django.shortcuts import render, redirect
 from . import models
-from .forms import RestaurantForm, ItemForm
+from .forms import RestaurantForm, ItemForm, UserSignup, UserLogin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 from django.utils import timezone
+from django.contrib.auth import authenticate, login, logout
 
+
+
+
+
+def usersignup(request):
+	context={}
+	form = UserSignup()
+	contect['form']=form
+	if request.method == 'POST':
+		form = UserSignup(request.POST)
+		if form.is_valid():
+			user=form.save()
+			username=user.username
+			password=user.password
+			user.set_password(password)
+			user.save()
+
+			auth = authenticate(username=username, password=password)
+			login(request, auth)
+			messages.success(request, "Successfully signup")
+			return redirect("restaurant_list")
+
+		messages.error(request, form.errors)
+		return redirect("signup")
+	return render(request, 'signup.html', context)
+
+
+def userlogin(request):
+	context={}
+	form = UserLogin()
+	contect['form']=form
+	if request.method == 'POST':
+		form = UserSignup(request.POST)
+		if form.is_valid():
+
+			username=form.cleaned_data['username']
+			password=form.cleaned_data['password']
+
+			auth = authenticate(username=username, password=password)
+			if auth is not None:
+				login(request, auth)
+				messages.success(request, "Successfully login")
+				return redirect("restaurant_list")
+		messages.error(request, form.errors)
+		return redirect("login")
+	return render(request, 'login.html', context)
+
+
+def userlogout(request):
+	logout(request)
+	messages.success(request, "Successfully logout")
+	return redirect("restaurant_list")
 
 
 def item_create(request):
