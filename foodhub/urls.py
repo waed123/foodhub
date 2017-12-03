@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^rest/', include('restaurants.urls')),
+    url(r'^api/', include('api.urls', namespace='api')),
 ]
 
 if settings.DEBUG:
