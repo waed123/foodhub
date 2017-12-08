@@ -1,9 +1,17 @@
 from django.shortcuts import render
-from restaurants.models import Restaurant
+from restaurants.models import Restaurant, Item
 from rest_framework.generics import ListAPIView,RetrieveAPIView, DestroyAPIView, CreateAPIView, RetrieveUpdateAPIView
-from .serializers import RestaurantListSerializer, RestaurantDetailSerializer, RestaurantCreateUpdateSerializer
+from .serializers import ItemDetailSerializer, RestaurantListSerializer, RestaurantDetailSerializer, RestaurantCreateUpdateSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.filters import SearchFilter
+
+
+class ItemDetailAPIView(RetrieveAPIView):
+	queryset = Item.objects.all() 
+	serializer_class = ItemDetailSerializer
+	lookup_field = 'slug'
+
+	permission_classes = [IsAuthenticated]
 
 class RestaurantListAPIView(ListAPIView):
 	queryset = Restaurant.objects.all() 
